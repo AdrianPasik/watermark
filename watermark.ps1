@@ -1,17 +1,25 @@
 $workdir="C:\test_rysunkow";
-$targetDir="C:\test_rysunkow\output";
+$watermarkOutputDir="C:\test_rysunkow\outputaaa";
 $magickExeFile = "C:\Program Files\ImageMagick-7.0.8-Q16\magick.exe";
 
-#$arguments = "convert $workdir\watermark.png +profile \""icc\"" $workdir\tmp.png"
-#Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
+if(Test-Path $magickExeFile) {
+    Write-Host "Image Magick found!" -ForegroundColor Green
+} else {
+    Write-Host "Image Magick not found, aborting script" -ForegroundColor Red
+    exit
+}
+
+if(Test-Path $watermarkOutputDir) {
+    Write-Host "Watermark output directory founded, proceeding" -ForegroundColor Green;
+} else {
+    New-Item -Path $watermarkOutputDir -ItemType Directory
+    Write-Host "Watermark directory not found, creating" - -ForegroundColor Green
+}
+
+Write-Host "Starting watermark" -ForegroundColor Green
 
 $files = Get-ChildItem -File $workdir;
 foreach($file in $files) {
-    # $command = "$magickExeFile convert $workdir\$file -resize 50% $targetDir\$file"
-    # & $command;
-    # Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "convert $workdir\$file -resize 50% $targetDir\$file"ccc
-    #$arguments = "convert $workdir\$file -background transparent -fill grey -font Calibri -pointsize 14 -gravity center caption:\""Dom\n sadf\"" $targetDir\$file"
-    
-    $arguments = "composite -gravity center $workdir\watermark.png $workdir\$file $targetDir\$file"
+    $arguments = "composite -dissolve 50% -gravity center -quality 100 $workdir\watermark.png $workdir\$file $watermarkOutputDir\$file"
     Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
 }
