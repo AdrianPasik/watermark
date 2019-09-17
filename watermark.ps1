@@ -57,21 +57,21 @@ foreach($file in $files) {
         $height = [int]($desiredWidth * $ratio);
         $resizeVal = $desiredWidth.ToString() + "x" + $height.ToString()
         $arguments = "convert $workdir\$file -resize $resizeVal  $tempDirectory\$file"
-        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
+        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments" -Wait
         #watermark
         $height = [int]($desiredWidth * ($watermarkImageInfo.Item1 / $watermarkImageInfo.Item2))
         $resizeVal = $desiredWidth.ToString() + "x" + $height.ToString()
         $arguments = "convert $watermarkOriginalPath\$waterMarkFile -resize $resizeVal $tempDirectory\$waterMarkFile"
-        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
+        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments" -Wait
     } else {
         Copy-Item -Path $workdir\$file -Destination $tempDirectory\$file
         #watermark
         $resizeVal = $fileImageInfo.Item1.ToString() + "x" + $fileImageInfo.Item2.ToString();
         $arguments = "convert $watermarkOriginalPath\$waterMarkFile -resize $resizeVal $tempDirectory\$waterMarkFile"
-        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
+        Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments" -Wait
     }
     $arguments = "composite -dissolve 50% -gravity center -quality 100 $tempDirectory\$waterMarkFile $tempDirectory\$file $finalOutputDir\$file"
-    Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
+    Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments" -Wait
     $removePath = "$tempDirectory\*.*";
     Remove-Item $removePath -Force -Recurse
     
