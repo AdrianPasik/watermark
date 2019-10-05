@@ -48,7 +48,10 @@ if(Test-Path "$watermarkOriginalPath\$waterMarkFile") {
 Write-Host "Starting watermark" -ForegroundColor Green
 
 $files = Get-ChildItem -File $workdir;
+$i = 0;
 foreach($file in $files) {
+    $i++
+    Write-Host "$i /"$files.Length.ToString() "Working on $file"  -ForegroundColor Green
     $watermarkImageInfo = Get-ImageWidthHeight -filePath $watermarkOriginalPath\$waterMarkFile
     $fileImageInfo = Get-ImageWidthHeight -filePath $workdir\$file;
     $ratio = $fileImageInfo.Item1 / $fileImageInfo.Item2;
