@@ -9,7 +9,7 @@ function Get-ImageWidthHeight {
     return $ret;
 }
 
-$desiredWidth = 800; #800 dla ładnego wyglądu
+$desiredWidth = 800; #800 dla ładnego wyglądu, przy 500 png nie generuje ładnego skalowania
 $workdir="C:\test_rysunkow";
 $watermarkOriginalPath="C:\test_rysunkow\watermark";
 $waterMarkFile="watermark-final.png";
