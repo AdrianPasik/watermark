@@ -9,7 +9,7 @@ function Get-ImageWidthHeight {
     return $ret;
 }
 
-$desiredWidth = 500;
+$desiredWidth = 800; #800 dla ładnego wyglądu
 $workdir="C:\test_rysunkow";
 $watermarkOriginalPath="C:\test_rysunkow\watermark";
 $waterMarkFile="watermark-final.png";
