@@ -9,12 +9,13 @@ function Get-ImageWidthHeight {
     return $ret;
 }
 
-$desiredWidth = 800; #800 dla ładnego wyglądu, przy 500 png nie generuje ładnego skalowania
-$workdir="C:\test_rysunkow";
-$watermarkOriginalPath="C:\test_rysunkow\watermark";
+$desiredWidth = 800; # something is wrong with scaling if you go into lower sizes
+# example configuration - change to your own
+$workdir="C:\images_resize_folder";
+$watermarkOriginalPath="C:\images_resize_folder\watermark";
 $waterMarkFile="watermark-final.png";
-$tempDirectory="C:\test_rysunkow\temp"
-$finalOutputDir="C:\test_rysunkow\output";
+$tempDirectory="C:\images_resize_folder\temp"
+$finalOutputDir="C:\images_resize_folder\output";
 $magickExeFile = "C:\Program Files\ImageMagick-7.0.8-Q16\magick.exe";
 
 if(Test-Path $magickExeFile) {
@@ -77,12 +78,6 @@ foreach($file in $files) {
     Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments" -Wait
     $removePath = "$tempDirectory\*.*";
     Remove-Item $removePath -Force -Recurse
-    
-
-    # to jest gotowy watermarking do zdjęcia
-    #$watermarkOriginalPath="C:\test_rysunkow\"
-    #$arguments = "composite -dissolve 50% -gravity center -quality 100 $workdir\watermark.png $workdir\$file $finalOutputDir\$file"
-    #Start-Process -NoNewWindow -FilePath $magickExeFile -ArgumentList "$arguments"
 }
 
 
