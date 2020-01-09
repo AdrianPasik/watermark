@@ -80,4 +80,6 @@ foreach($file in $files) {
     Remove-Item $removePath -Force -Recurse
 }
 
+Write-Host "Job is finished" -ForegroundColor Green
+
 
